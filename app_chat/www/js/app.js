@@ -66,3 +66,25 @@ app.controller('LoginCtrl', function($scope, $state, $http, $httpParamSerializer
 		});  
 	}
 });
+
+app.controller('ChannelCtrl', function($scope, $state, $http, $localStorage){
+
+console.log("test");
+
+	$http({
+		method: 'GET',
+		headers: {
+			'X-Auth-Token': 'LiIL8wLhJBKkVWJYLo2RrbKedqBAFvf3HsbvosFOCs_',
+			'X-User-Id': 's5yFE5gD2BMLBb36g',
+		},
+		url: 'https://demo.rocket.chat/api/v1/channels.list'
+	
+	})
+	.success(function (data, status) {
+		console.log('success ' + data);
+	})
+	.error(function (data, status) {
+		console.log('error ' + data);
+	});  
+
+});
