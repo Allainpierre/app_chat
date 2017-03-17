@@ -1,0 +1,17 @@
+<ion-view view-title="Connexion" class="login" ng-controller="LoginCtrl">
+	<ion-content>
+		<form ng-submit="submit()">
+			<div class="list">
+				<label class="item item-input">
+					<input type="text" ng-model="username" name="username" placeholder="username" required>
+				</label>
+				<label class="item item-input">
+					<input type="password" ng-model="password" name="password" placeholder="password" required>
+				</label>
+			</div>
+			<div class="padding">
+				<button type="submit" class="button button-block button-positive">Submit</button>
+			</div>
+		</form>
+	</ion-content>
+</ion-view>
