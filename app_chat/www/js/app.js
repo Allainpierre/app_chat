@@ -1,7 +1,10 @@
 
 var app = angular.module('app', ['ionic', 'ngStorage']);
 
-app.constant('API', 'https://demo.rocket.chat')
+app.constant('API', '')
+
+/* active this line on production..
+app.constant('API', 'https://demo.rocket.chat')*/
 
 /*app.run(function($ionicPlatform) {
 	$ionicPlatform.ready(function() {
@@ -28,7 +31,6 @@ app.config(function($stateProvider, $urlRouterProvider){
 		templateUrl: 'pages/channel.html',
 		controller: 'ChannelCtrl'
 	})
-
 
 	$urlRouterProvider.otherwise('/login');
 })
@@ -58,8 +60,8 @@ app.controller('LoginCtrl', function(API, $scope, $state, $http, $httpParamSeria
 			window.localStorage.setItem("auth_token", data.authToken);
 			window.localStorage.setItem("user_id", data.userId);
 
-			console.log(window.localStorage.getItem("auth_token"));
-			console.log(window.localStorage.getItem("user_id"));
+			/*console.log(window.localStorage.getItem("auth_token"));
+			console.log(window.localStorage.getItem("user_id"));*/
 
 			$state.go('channel', {}, {location: 'replace'});
 		})
@@ -71,19 +73,19 @@ app.controller('LoginCtrl', function(API, $scope, $state, $http, $httpParamSeria
 
 app.controller('ChannelCtrl', function(API, $scope, $state, $http, $localStorage){
 
-console.log("test");
+	var datas = null;
 
 	$http({
 		method: 'GET',
 		headers: {
-			'X-Auth-Token': 'LiIL8wLhJBKkVWJYLo2RrbKedqBAFvf3HsbvosFOCs_',
-			'X-User-Id': 's5yFE5gD2BMLBb36g',
+			'X-Auth-Token': window.localStorage.getItem("auth_token"),
+			'X-User-Id': window.localStorage.getItem("user_id"),
 		},
 		url: API + '/api/v1/channels.list'
 	
 	})
 	.success(function (data, status) {
-		console.log('success ' + data);
+		$scope.datas = data.channels;
 	})
 	.error(function (data, status) {
 		console.log('error ' + data);
