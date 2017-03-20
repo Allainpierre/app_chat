@@ -1,6 +1,12 @@
 {
   "name": "app_chat",
   "app_id": "",
+   "proxies": [
+    {
+      "path": "/api/v1",
+      "proxyUrl": "https://demo.rocket.chat/api/v1"
+    }
+  ],
   "gulpStartupTasks": [
     "sass",
     "watch"
