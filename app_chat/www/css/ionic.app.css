@@ -9814,3 +9814,16 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+.profil {
+  text-align: center; }
+  .profil img {
+    height: 100px;
+    width: 100px;
+    display: block;
+    border-radius: 3px;
+    margin: 20px auto; }
+  .profil .name {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 600; }

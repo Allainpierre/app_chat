@@ -30,6 +30,11 @@ app.config(function($stateProvider, $urlRouterProvider){
 		url: '/channel',
 		templateUrl: 'pages/channel.html',
 		controller: 'ChannelCtrl'
+	}),
+	$stateProvider.state('details', {
+		url: '/details/:roomID',
+		templateUrl: 'pages/channel_details.html',
+		controller: 'ChannelDetailsCtrl'
 	})
 
 	$urlRouterProvider.otherwise('/login');
@@ -71,6 +76,33 @@ app.controller('LoginCtrl', function(API, $scope, $state, $http, $httpParamSeria
 	}
 });
 
+app.controller('ProfilCtrl', function(API, $scope, $state, $http, $localStorage){
+
+	var email = null;
+
+	$http({
+		method: 'GET',
+		headers: {
+			'X-Auth-Token': window.localStorage.getItem("auth_token"),
+			'X-User-Id': window.localStorage.getItem("user_id"),
+		},
+		url: API + '/api/v1/me'
+
+	})
+	.success(function (profil_data, status) {
+		$scope.profil = profil_data;
+	})
+	.error(function (data, status) {
+		console.log('error ' + data);
+	});
+
+    /*$scope.logout = function(){
+		window.localStorage.setItem("auth_token", null);
+		window.localStorage.setItem("user_id", null);
+		$state.go('login', {}, {location: 'replace'});
+	}*/
+});
+
 app.controller('ChannelCtrl', function(API, $scope, $state, $http, $localStorage){
 
 	var datas = null;
@@ -81,14 +113,57 @@ app.controller('ChannelCtrl', function(API, $scope, $state, $http, $localStorage
 			'X-Auth-Token': window.localStorage.getItem("auth_token"),
 			'X-User-Id': window.localStorage.getItem("user_id"),
 		},
-		url: API + '/api/v1/channels.list'
-	
+		url: API + '/api/v1/channels.list.joined'
+
 	})
 	.success(function (data, status) {
-		$scope.datas = data.channels;
+		if(data.count == 0){
+			$scope.msg = "Vous n'avez encore rejoin aucun channel";
+		}else{
+			$scope.datas = data.channels;
+			console.log(data);
+		}
 	})
 	.error(function (data, status) {
 		console.log('error ' + data);
 	});  
+
+});
+
+app.controller('ChannelDetailsCtrl', function(API, $httpParamSerializerJQLike, $scope, $state, $http, $localStorage, $stateParams){
+
+	$scope.roomID = $stateParams.roomID;
+
+
+	$scope.postMsg = function(msg){
+
+
+		console.log(msg);
+
+		var dataObj = {
+			channel : '#'+this.roomID,
+			text : this.msg
+		}
+		console.log(dataObj);
+
+		$http({
+			method: 'POST',
+			url: API + '/api/v1/chat.postMessage',
+			headers: {
+				'X-Auth-Token': window.localStorage.getItem("auth_token"),
+				'X-User-Id': window.localStorage.getItem("user_id"),
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			data: $httpParamSerializerJQLike(dataObj)
+		})
+		.success(function (data, status) {
+			console.log('success');
+			console.log(data);
+		})
+		.error(function (data, status) {
+			console.log('error');
+			console.log(data);
+		});
+	}
 
 });

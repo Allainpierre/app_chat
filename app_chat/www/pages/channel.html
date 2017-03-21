@@ -1,8 +1,9 @@
 <ion-view view-title="Salon public" class="channel" ng-controller="ChannelCtrl">
 	<ion-content>
 		<ion-list>
+			{{ msg }}
 			<ion-item ng-repeat="data in datas">
-				<a ui-sref="channel">{{ data.name }}</a>
+				<a ui-sref="details({ roomID: data._id })">{{ data.name }}</a>
 			</ion-item>
 		</ion-list>
 	</ion-content>
