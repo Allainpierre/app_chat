@@ -76,7 +76,7 @@ app.controller('LoginCtrl', function(API, $scope, $state, $http, $httpParamSeria
 	}
 });
 
-app.controller('ProfilCtrl', function(API, $scope, $state, $http, $localStorage){
+/*app.controller('ProfilCtrl', function(API, $scope, $state, $http, $localStorage){
 
 	var email = null;
 
@@ -96,16 +96,17 @@ app.controller('ProfilCtrl', function(API, $scope, $state, $http, $localStorage)
 		console.log('error ' + data);
 	});
 
-    /*$scope.logout = function(){
+    $scope.logout = function(){
 		window.localStorage.setItem("auth_token", null);
 		window.localStorage.setItem("user_id", null);
 		$state.go('login', {}, {location: 'replace'});
-	}*/
-});
+	}
+});*/
 
 app.controller('ChannelCtrl', function(API, $scope, $state, $http, $localStorage){
 
 	var datas = null;
+	$scope.loader = true;
 
 	$http({
 		method: 'GET',
@@ -117,11 +118,11 @@ app.controller('ChannelCtrl', function(API, $scope, $state, $http, $localStorage
 
 	})
 	.success(function (data, status) {
+		$scope.loader = false;
 		if(data.count == 0){
 			$scope.msg = "Vous n'avez encore rejoin aucun channel";
 		}else{
 			$scope.datas = data.channels;
-			console.log(data);
 		}
 	})
 	.error(function (data, status) {
@@ -134,36 +135,32 @@ app.controller('ChannelDetailsCtrl', function(API, $httpParamSerializerJQLike, $
 
 	$scope.roomID = $stateParams.roomID;
 
-
 	$scope.postMsg = function(msg){
 
-
-		console.log(msg);
-
-		var dataObj = {
-			channel : '#'+this.roomID,
-			text : this.msg
+		if(typeof msg == 'undefined'){
+			$scope.alert = "Votre message ne peut être vide";
+		}else{	
+			var dataObj = {
+				channel : '#'+this.roomID,
+				text : this.msg
+			}
+			$http({
+				method: 'POST',
+				url: API + '/api/v1/chat.postMessage',
+				headers: {
+					'X-Auth-Token': window.localStorage.getItem("auth_token"),
+					'X-User-Id': window.localStorage.getItem("user_id"),
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				data: $httpParamSerializerJQLike(dataObj)
+			})
+			.success(function (data, status) {
+				$scope.alert = "Votre message à bien été envoyer";
+			})
+			.error(function (data, status) {
+				$scope.alert = "Votre message n'a pas été envoyer !";
+			});
 		}
-		console.log(dataObj);
-
-		$http({
-			method: 'POST',
-			url: API + '/api/v1/chat.postMessage',
-			headers: {
-				'X-Auth-Token': window.localStorage.getItem("auth_token"),
-				'X-User-Id': window.localStorage.getItem("user_id"),
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			data: $httpParamSerializerJQLike(dataObj)
-		})
-		.success(function (data, status) {
-			console.log('success');
-			console.log(data);
-		})
-		.error(function (data, status) {
-			console.log('error');
-			console.log(data);
-		});
 	}
 
 });

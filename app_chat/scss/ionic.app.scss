@@ -16,9 +16,76 @@ $dark:                            #444 !default;
 */
 
 $ionicons-font-path: "../lib/ionic/fonts" !default;
+$green: #7ac458;
+$prim: #3d425f;
 
 @import "www/lib/ionic/scss/ionic";
+* a{
+	text-decoration: none;
+}
+* {
+	box-sizing: border-box;
+}
+.green{
+	background-color: $green !important;
+}
+.ion-chevron-left{
+	padding-left: 10px;
+}
 
+.pane{
+	background-color: $prim;
+}
+
+.login{
+	background-image: url('../img/fond.png');
+	form{
+		position: absolute;
+		left: 10px;
+		right: 10px;
+		bottom: 10%;
+		.list{
+			border-radius: 3px;
+		}
+		.button{
+			margin-top: 0px;
+		}
+	}
+}
+.channel{
+	.item{
+		border-color: #292c40;
+		background-color: darken($prim,2%);
+		border-top: 0px !important;
+		a{
+			color: #fefefe !important;
+		}
+	}
+}
+.channeldetails{
+	form{
+		position: absolute;
+		bottom: 0px;
+		right: 0px;
+		left: 0px;
+		input{
+			width: 80%;
+			height: 50px;
+			padding: 0px 20px;
+			float: left;
+			background-color: lighten($prim, 20%);
+			color: #fff !important;
+		}
+		button{
+			width: 20%;
+			float: right;
+			height: 50px;
+			border: 0px;
+			background-color: darken($prim, 15%);
+			color: #fefefe;
+		}
+	}
+}
 .profil{
 	text-align: center;
 	img{
@@ -34,3 +101,44 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 		font-weight: 600;
 	}
 }
+
+
+.spinner {
+	animation: rotate 2s linear infinite;
+	z-index: 2;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -25px 0 0 -25px;
+	width: 50px;
+	height: 50px;
+
+	& .path {
+		stroke: $green;
+		stroke-linecap: round;
+		animation: dash 1.5s ease-in-out infinite;
+	}
+
+}
+
+@keyframes rotate {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes dash {
+	0% {
+		stroke-dasharray: 1, 150;
+		stroke-dashoffset: 0;
+	}
+	50% {
+		stroke-dasharray: 90, 150;
+		stroke-dashoffset: -35;
+	}
+	100% {
+		stroke-dasharray: 90, 150;
+		stroke-dashoffset: -124;
+	}
+}
+

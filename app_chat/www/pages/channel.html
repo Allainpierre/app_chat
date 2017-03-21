@@ -1,5 +1,10 @@
-<ion-view view-title="Salon public" class="channel" ng-controller="ChannelCtrl">
+<ion-view view-title="Canaux" class="channel" ng-controller="ChannelCtrl">
 	<ion-content>
+		<div class="loader" ng-show="!loader==false">
+			<svg class="spinner" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</div>
 		<ion-list>
 			{{ msg }}
 			<ion-item ng-repeat="data in datas">

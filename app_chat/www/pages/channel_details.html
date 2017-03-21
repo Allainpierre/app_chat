@@ -1,8 +1,9 @@
-<ion-view view-title="" class="channeldetails" ng-controller="ChannelDetailsCtrl">
+<ion-view view-title="{{ roomID }}" class="channeldetails" ng-controller="ChannelDetailsCtrl">
 	<ion-content>
+	{{ alert }}
 	<form ng-submit="postMsg(msg)">
-		<input type="text" name="text" id="text" ng-model="msg">
-		<button type="submit">OK</button>
+		<input type="text" name="text" id="text" ng-model="msg" placeholder="Message..">
+		<button type="submit">SEND</button>
 	</form>
 	</ion-content>
 </ion-view>

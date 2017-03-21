@@ -1,6 +1,7 @@
-<ion-view view-title="Connexion" class="login" ng-controller="LoginCtrl">
-	<ion-content>
+<ion-view view-title="Connexion" class="login" ng-controller="LoginCtrl" hide-nav-bar="true">
+	<ion-content class="padding">
 		<form ng-submit="submit()">
+		<img src="img/logo.svg" alt="logo"> 
 			<div class="list">
 				<label class="item item-input">
 					<input type="text" ng-model="username" name="username" placeholder="username" required>
@@ -9,9 +10,7 @@
 					<input type="password" ng-model="password" name="password" placeholder="password" required>
 				</label>
 			</div>
-			<div class="padding">
-				<button type="submit" class="button button-block button-positive">Submit</button>
-			</div>
+				<button type="submit" class="button button-block button-positive green">Se connecter</button>
 		</form>
 	</ion-content>
 </ion-view>
